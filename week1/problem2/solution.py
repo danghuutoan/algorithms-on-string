@@ -1,5 +1,4 @@
 # python3
-from cgitb import reset
 import sys
 
 
@@ -8,7 +7,7 @@ class Node:
         self.value = ch
         self.node_id = node_id
         self.chidren = dict()
-        # self.isEndOfWord = False
+        self.isEndOfWord = False
 
     def addChild(self, ch: str, node_id: int):
         new_node = Node(ch, node_id)
@@ -21,9 +20,6 @@ class Node:
     def hasChild(self, ch: str):
         return ch in self.chidren
 
-    def isEndOfWord(self):
-        return len(self.chidren) < 1
-
 
 class Trie:
     def __init__(self) -> None:
@@ -32,6 +28,7 @@ class Trie:
         self.latest_id = 0
 
     def insert(self, word: str):
+        word = word + '$'
         current = self.root
 
         for ch in word:
@@ -40,7 +37,7 @@ class Trie:
                 self.latest_id = self.latest_id + 1
                 self.updateNodeDict(current_node=current, new_node=new_node)
             current = current.getChild(ch)
-        # current.isEndOfWord = True
+        current.isEndOfWord = True
 
     def updateNodeDict(self, current_node: Node, new_node: Node):
         if current_node.node_id not in self.nodes:
@@ -53,13 +50,12 @@ class Trie:
             return False
 
         s = iter(text)
-        # ch = next(s, None)
         current = self.root
 
         while True:
             ch = next(s, None)
 
-            if current.isEndOfWord() is True:
+            if current.hasChild('$') is True:
                 return True
 
             if ch is None:
@@ -92,12 +88,12 @@ def solve(text, n, patterns):
     return result
 
 
-text = sys.stdin.readline().strip()
-n = int(sys.stdin.readline().strip())
-patterns = []
-for i in range(n):
-    patterns += [sys.stdin.readline().strip()]
+# text = sys.stdin.readline().strip()
+# n = int(sys.stdin.readline().strip())
+# patterns = []
+# for i in range(n):
+#     patterns += [sys.stdin.readline().strip()]
 
-ans = solve(text, n, patterns)
+# ans = solve(text, n, patterns)
 
-sys.stdout.write(" ".join(map(str, ans)) + "\n")
+# sys.stdout.write(" ".join(map(str, ans)) + "\n")
