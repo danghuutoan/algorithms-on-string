@@ -88,12 +88,13 @@ def solve(text, n, patterns):
     return result
 
 
-# text = sys.stdin.readline().strip()
-# n = int(sys.stdin.readline().strip())
-# patterns = []
-# for i in range(n):
-#     patterns += [sys.stdin.readline().strip()]
+if __name__ == '__main__':
+    text = sys.stdin.readline().strip()
+    n = int(sys.stdin.readline().strip())
+    patterns = []
+    for i in range(n):
+        patterns += [sys.stdin.readline().strip()]
 
-# ans = solve(text, n, patterns)
+    ans = solve(text, n, patterns)
 
-# sys.stdout.write(" ".join(map(str, ans)) + "\n")
+    sys.stdout.write(" ".join(map(str, ans)) + "\n")
