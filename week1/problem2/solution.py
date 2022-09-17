@@ -7,7 +7,6 @@ class Node:
         self.value = ch
         self.node_id = node_id
         self.chidren = dict()
-        self.isEndOfWord = False
 
     def addChild(self, ch: str, node_id: int):
         new_node = Node(ch, node_id)
@@ -37,7 +36,6 @@ class Trie:
                 self.latest_id = self.latest_id + 1
                 self.updateNodeDict(current_node=current, new_node=new_node)
             current = current.getChild(ch)
-        current.isEndOfWord = True
 
     def updateNodeDict(self, current_node: Node, new_node: Node):
         if current_node.node_id not in self.nodes:
