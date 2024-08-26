@@ -16,3 +16,39 @@
 - If Trie(Patterns) has 𝑛 nodes, first label the root with 0 and then label the remaining nodes with the integers 1 through 𝑛 − 1 in any order you like.
 - Each edge of the adjacency list of Trie(Patterns) will be encoded by a triple: the first two members of the triple must be the integers 𝑖, 𝑗 labeling the initial and terminal nodes of the edge, respectively; the third member of the triple must be the symbol 𝑐 labeling the edge.
 - Output each such triple in the format `u->v:c` (with no spaces) on a separate line.
+
+### Example
+
+**Input:**
+```
+3
+ATAGA
+ATC
+GAT
+```
+
+**Output:**
+
+```
+0->1:A
+1->2:T
+2->3:A
+3->4:G
+4->5:A
+2->6:C
+0->7:G
+7->8:A
+8->9:T
+```
+
+
+```
+    0
+   / \
+  A   G
+ /     \
+1       7
+|       |
+T       A
+```
+
