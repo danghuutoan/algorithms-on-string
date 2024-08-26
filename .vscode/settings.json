@@ -1,6 +1,6 @@
 {
     "python.testing.pytestArgs": [
-        "tests"
+        "tests/week1"
     ],
     "python.envFile": "${workspaceFolder}/.env",
     "python.testing.unittestEnabled": false,
