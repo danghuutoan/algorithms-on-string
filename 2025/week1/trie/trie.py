@@ -1,6 +1,56 @@
 #Uses python3
 import sys
 
+
+class Trie:
+
+    def __init__(self, tree = None):
+        if tree is None:
+            self._nodes = dict()
+        else: 
+            self._nodes = tree
+        # init root node
+        self._nodes[0] = dict()
+
+    def create_node(self):
+        new_idx = len(self._nodes.items())
+        self._nodes[new_idx] = dict()
+        return new_idx
+
+    def get_node(self, node_id):
+        return self._nodes[node_id]
+    
+    def create_edge(self, from_id, to_id, label):
+        self._nodes[from_id][label] = to_id
+    
+    def to_dict(self):
+        return self._nodes
+
+def create_node(tree):
+    node_num = len(tree.items())
+    new_idx = node_num
+    tree[new_idx] = dict()
+    return new_idx
+
+def create_edge(from_node, to_node, label, tree):
+    tree[from_node][label] = to_node
+
+def get_node(node_id, tree):
+    return tree[node_id]
+
+def herd(pattern: str, tree: dict):
+    trie = Trie(tree=tree)
+    idx = 0
+    for c in pattern:
+        current_node = trie.get_node(idx)
+        # if there is a node with label c from current node
+        if c in current_node:
+            idx = current_node[c]
+        else:
+            new_idx = trie.create_node()
+            trie.create_edge(from_id=idx, to_id=new_idx, label=c)
+            idx = new_idx
+
 # Return the trie built from patterns
 # in the form of a dictionary of dictionaries,
 # e.g. {0:{'A':1,'T':2},1:{'C':3}}
@@ -12,6 +62,9 @@ import sys
 def build_trie(patterns):
     tree = dict()
     # write your code here
+    tree[0] = {}
+    for pattern in patterns:
+        herd(pattern, tree)
     return tree
 
 
