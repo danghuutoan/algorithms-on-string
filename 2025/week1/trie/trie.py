@@ -25,19 +25,18 @@ class Trie:
     
     def to_dict(self):
         return self._nodes
-
-def herd(pattern: str, tree: dict):
-    trie = Trie(tree=tree)
-    idx = 0
-    for c in pattern:
-        current_node = trie.get_node(idx)
-        # if there is a node with label c from current node
-        if c in current_node:
-            idx = current_node[c]
-        else:
-            new_idx = trie.create_node()
-            trie.create_edge(from_id=idx, to_id=new_idx, label=c)
-            idx = new_idx
+    
+    def insert(self, text: str):
+        idx = 0
+        for c in text:
+            current_node = self.get_node(idx)
+            # if there is a node with label c from current node
+            if c in current_node:
+                idx = current_node[c]
+            else:
+                new_idx = self.create_node()
+                self.create_edge(from_id=idx, to_id=new_idx, label=c)
+                idx = new_idx
 
 # Return the trie built from patterns
 # in the form of a dictionary of dictionaries,
@@ -50,9 +49,10 @@ def herd(pattern: str, tree: dict):
 def build_trie(patterns):
     tree = dict()
     # write your code here
+    trie = Trie(tree=tree)
     tree[0] = {}
     for pattern in patterns:
-        herd(pattern, tree)
+        trie.insert(pattern)
     return tree
 
 
