@@ -26,18 +26,6 @@ class Trie:
     def to_dict(self):
         return self._nodes
 
-def create_node(tree):
-    node_num = len(tree.items())
-    new_idx = node_num
-    tree[new_idx] = dict()
-    return new_idx
-
-def create_edge(from_node, to_node, label, tree):
-    tree[from_node][label] = to_node
-
-def get_node(node_id, tree):
-    return tree[node_id]
-
 def herd(pattern: str, tree: dict):
     trie = Trie(tree=tree)
     idx = 0
