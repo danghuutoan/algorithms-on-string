@@ -1,9 +1,7 @@
 # python3
 import sys
-from queue import Queue
-from collections import deque
 
-NA = -1
+
 
 
 class Node:
@@ -76,6 +74,22 @@ class Trie:
                 stack.append(next_node)
                 # queue.append(next_node)
         return offset
+    
+    def compact(self):
+        curr_node = self.root
+
+        stack = []
+
+        stack.append(curr_node)
+
+        while len(stack) >0:
+            curr = stack.pop()
+            if curr.is_end_of_word is True:
+              print("end")
+            
+            for _, next_node in curr.get_children().items():
+                stack.append(next_node)
+
 
     def match(self, pattern: str):
 
@@ -107,30 +121,23 @@ class Trie:
         
         return False
 
-
-def solve(text, n, patterns):
-    result = []
-    trie = Trie()
-    text_len = len(text)
-    
-
-
-    for p in patterns:
-        trie.insert(p)
-
-    for i in range(text_len):
-        suffix = text[i:]
-        if trie.suffix_match(suffix):
-            result.append(i)
-    return result
+def build_suffix_tree(text):
+  """
+  Build a suffix tree of the string text and return a list
+  with all of the labels of its edges (the corresponding 
+  substrings of the text) in any order.
+  """
+  result = []
+  trie = Trie()
+  for i in range(len(text)):
+      print(text[i:])
+      trie.insert(text[i:])
+  # Implement this function yourself
+  print(trie)
+  return result
 
 
-text = sys.stdin.readline().strip()
-n = int(sys.stdin.readline().strip())
-patterns = []
-for i in range(n):
-    patterns += [sys.stdin.readline().strip()]
-
-ans = solve(text, n, patterns)
-
-sys.stdout.write(" ".join(map(str, ans)) + "\n")
+if __name__ == '__main__':
+  text = sys.stdin.readline().strip()
+  result = build_suffix_tree(text)
+  print("\n".join(result))
