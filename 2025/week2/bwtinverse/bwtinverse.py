@@ -19,21 +19,20 @@ def InverseBWT(bwt):
     for i in range(n):
         if first_column[i] not in first_occurence:
             first_occurence[first_column[i]] = i
-
+    
+    for i in range(n):
         count_array.append(c[bwt[i]])
         c[bwt[i]] += 1
 
     pos = 0
-    res = [None] * n
-    res[-1] = "$"
-    for i in range(n - 1):
+    res = []
+    res.append(first_column[pos]) 
+    for i in range(n-1):
         curr_char = bwt[pos]
-        offset = count_array[pos]
-
-        res[n - 2 - i] = curr_char
+        offset = count_array[pos]     
+        res.append(curr_char)
         pos = first_occurence[curr_char] + offset
-
-    return "".join(res)
+    return "".join(reversed(res))
 
 
 if __name__ == "__main__":
