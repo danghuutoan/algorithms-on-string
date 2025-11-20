@@ -1,6 +1,14 @@
 # python3
 import sys
 
+char_list = ['$', "A", "C", "G", "T"]
+char_list_idx_mapping = {
+  "$": 0,
+  "A": 1,
+  "C": 2,
+  "G": 3,
+  "T": 4,
+}
 
 def PreprocessBWT(bwt):
   """
@@ -13,9 +21,30 @@ def PreprocessBWT(bwt):
         occ_count_before[C][P] is the number of occurrences of character C in bwt
         from position 0 to position P inclusive.
   """
+  char_count = {
+    "$": 0,
+    "A": 0,
+    "C": 0,
+    "G": 0,
+    "T": 0,
+  }
+  starts = [0]* len(char_list)
+  occ_counts_before = []
+  occ_counts_before.append([0,0,0,0,0])
+  
   # Implement this function yourself
-  pass
+  first_column = sorted(bwt)
 
+  for i, c in enumerate(first_column):
+    if char_count[c] == 0:
+      starts[char_list_idx_mapping[c]] =i
+    char_count[c] += 1
+  
+  for i, c in enumerate(bwt):
+    new = occ_counts_before[-1].copy()
+    new[char_list_idx_mapping[c]] += 1
+    occ_counts_before.append(new)
+  return starts, occ_counts_before
 
 def CountOccurrences(pattern, bwt, starts, occ_counts_before):
   """
@@ -24,6 +53,16 @@ def CountOccurrences(pattern, bwt, starts, occ_counts_before):
   information we get from the preprocessing stage - starts and occ_counts_before.
   """
   # Implement this function yourself
+  top = 0
+  bottom = len(bwt) -1
+  while top <= bottom:
+    if pattern != '':
+      symbol = pattern[-1]
+      pattern = pattern[:-1]
+      top = starts[char_list_idx_mapping[symbol]] + occ_counts_before[top][char_list_idx_mapping[symbol]]
+      bottom = starts[char_list_idx_mapping[symbol]] + occ_counts_before[bottom+1][char_list_idx_mapping[symbol]] -1
+    else:
+      return bottom - top + 1
   return 0
      
 
