@@ -11,7 +11,12 @@ def build_suffix_array(text):
   suffix of text starts.
   """
   result = []
-  # Implement this function yourself
+  suffixes = []
+  for i in range(len(text)):
+    suffixes.append((text[i:], i))
+  
+  for suffix, idx in sorted(suffixes):
+    result.append(idx)
   return result
 
 
